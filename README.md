@@ -23,9 +23,19 @@ Copyright © 2025 [James Maki](https://www.jamesmaki.com).
 - [6. Creating a Production Build](#6-creating-a-production-build)
 - [7. Testing Your Production Build](#7-testing-your-production-build)
 - [8. Project Template](#8-project-template)
-    - [8.1. Folder Structure](#81-folder-structure)
-    - [8.2. Sample Component](#82-sample-component)
-- [9. References](#9-references)
+    - [8.1. Sample Component](#81-sample-component)
+    - [8.2. Folder Structure](#82-folder-structure)
+- [9. Assets](#9-assets)
+    - [9.1. Images](#91-images)
+    - [9.2. Audio](#92-audio)
+    - [9.3. Video](#93-video)
+    - [9.4. glTF Models](#94-gltf-models)
+    - [9.5. MSDF Text](#95-msdf-text)
+- [10. Frequently Asked Questions (FAQ)](#10-frequently-asked-questions-faq)
+    - [10.1. Where should I put my assets?](#101-where-should-i-put-my-assets)
+    - [10.2. How do I add additional asset file types to the bundler?](#102-how-do-i-add-additional-asset-file-types-to-the-bundler)
+    - [10.3. What if I want the minified version of A-Frame?](#103-what-if-i-want-the-minified-version-of-a-frame)
+- [11. References](#11-references)
 
 <!-- /TOC -->
 
@@ -196,22 +206,306 @@ Once you've created a production build and generated the **dist** directory you 
 
 ## 8. Project Template
 
-### 8.1. Folder Structure
-
-Sometimes when setting up a project from scratch it's unclear what the best way to organize files are. The template suggests a reasonable folder structure that works well, but you may change it as needed.
-
-### 8.2. Sample Component
+### 8.1. Sample Component
 
 This project includes a very basic sample component (**random-color.js**) to demonstrate how a custom component can be included in the project, and how to reference in the **index.html** file.
 
-The component simply sets a random color onto the material property of the `<a-sphere>` element every two (2) seconds. It can easily be removed by *deleting* the `random-color` attribute from the sphere, and *removing* the following line from **index.html**:
+The component simply sets a random color onto the material property of the `<a-sphere>` element every two (2) seconds. It can easily be removed by *deleting* the `random-color` attribute from the sphere, and *removing* the following import statement from **index.html**:
 
 ```html
-<script type="module" src="./src/components/random-color.js"></script>
+<!-- ... -->
+<head>
+    <script type="module">
+        // ...
+        import "./src/components/random-color.js";
+        // ...
+    </script>
+</head>
+<!-- ... -->
 ```
 
-## 9. References
+### 8.2. Folder Structure
+
+Sometimes when setting up a project from scratch it's unclear what the best way to organize files are. The template suggests a reasonable folder structure that works well, but you may change it as needed.
+
+## 9. Assets
+
+The following section provides suggestions on how to import common asset types.
+
+> [!IMPORTANT]
+> Assets located in the **assets/** directory need to be imported using an `import` statement so that Vite include them in the **dist** bundle.
+
+These examples suggest using the [A-Frame Asset Management System](https://aframe.io/docs/master/core/asset-management-system.html).
+
+### 9.1. Images
+
+Suggested asset location: **src/assets/images/**
+
+Example: **index.html**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="module">
+        import "aframe";
+        // ...
+        import "./src/assets/models/my-image.png";
+        // ...
+    </script>
+</head>
+<body>
+    <a-scene>
+        <a-assets>
+            <!-- ... -->
+
+            <img id="my-image" src="./src/assets/audio/my-image.png" />
+
+            <!-- ... -->
+        </a-assets>
+
+        <!-- ... -->
+
+        <a-image src="#my-image"></a-image>
+
+        <!-- ... -->
+
+    </a-scene>
+</body>
+</html>
+```
+
+> [!TIP]
+> See [\<a-image\>](https://aframe.io/docs/master/primitives/a-image.html) for more information on usage.
+
+### 9.2. Audio
+
+Suggested asset location: **src/assets/audio/**
+
+Example: **index.html**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="module">
+        import "aframe";
+        // ...
+        import "./src/assets/models/my-audio.mp3";
+        // ...
+    </script>
+</head>
+<body>
+    <a-scene>
+        <a-assets>
+            <!-- ... -->
+
+            <audio id="my-audio" src="./src/assets/audio/my-audio.mp3"></audio>
+
+            <!-- ... -->
+        </a-assets>
+
+        <!-- ... -->
+
+        <a-sound src="#my-audio"></a-sound>
+
+        <!-- ... -->
+
+    </a-scene>
+</body>
+</html>
+```
+
+> [!TIP]
+> See [\<a-sound\>](https://aframe.io/docs/master/primitives/a-sound.html) for more information on usage.
+
+### 9.3. Video
+
+Suggested asset location: **src/assets/video/**
+
+Example: **index.html**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="module">
+        import "aframe";
+        // ...
+        import "./src/assets/models/my-video.mp4";
+        // ...
+    </script>
+</head>
+<body>
+    <a-scene>
+        <a-assets>
+            <!-- ... -->
+
+            <video id="my-video" src="./src/assets/audio/my-video.mp4"></video>
+
+            <!-- ... -->
+        </a-assets>
+
+        <!-- ... -->
+
+        <a-video src="#my-video"></a-sound>
+
+        <!-- ... -->
+
+    </a-scene>
+</body>
+</html>
+```
+
+> [!TIP]
+> See [\<a-video\>](https://aframe.io/docs/master/primitives/a-video.html) for more information on usage.
+
+### 9.4. glTF Models
+
+This template supports [glTF](https://www.khronos.org/gltf/) **\*.gltf** and **\*.glb** file types.
+
+Suggested asset location: **src/assets/models/**
+
+Example: **index.html**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="module">
+        import "aframe";
+        // ...
+        import "./src/assets/models/my-model.glb";
+        // ...
+    </script>
+</head>
+<body>
+    <a-scene>
+        <a-assets>
+            <!-- ... -->
+
+            <a-asset-item
+                id="my-model"
+                src="./src/assets/models/my-model.glb"
+            ></a-asset-item>
+
+            <!-- ... -->
+        </a-assets>
+
+        <!-- ... -->
+
+        <a-gltf-model src="#my-model"></a-gltf-model>
+
+        <!-- ... -->
+
+    </a-scene>
+</body>
+</html>
+```
+
+> [!TIP]
+> See [\<a-gltf-model\>](https://aframe.io/docs/master/primitives/a-gltf-model.html) for more information on usage.
+
+### 9.5. MSDF Text
+
+The A-Frame [text component](https://aframe.io/docs/master/components/text.html) uses a multi-signed distance field (MSDF) font to render text within the 3D scene. This is significantly different than vector-based fonts typically used in 2D web application UI (e.g., \*.woff, \*.ttf, \*.eot, etc. ).
+
+Some projects may use one, or the other, or a combination of both. Vector-based fonts for the 2D UI layer can be added to the **assets/fonts/** directory. MSDF fonts require a different approach.
+
+> [!WARNING]
+> This template does not currently support proper hashing of MSDF fonts, so they must be stored in the project's **public/** directory.
+
+Suggested asset location: **public/msdf-fonts/**
+
+> [!IMPORTANT]
+> Note that the file path pattern has changed from the previous asset type examples. Ensure that you include both the **\*.png** and **\*.json** files for your MSDF font.
+
+Example: **index.html**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="module">
+        import "aframe";
+        // ...
+        import "/public/msdf-fonts/my-font.png";
+        import "/public/msdf-fonts/my-font-msdf.json";
+        // ...
+    </script>
+</head>
+<body>
+    <a-scene>
+        <a-assets>
+            <!-- ... -->
+        </a-assets>
+
+        <!-- ... -->
+
+        <a-text
+            value="Hello, World!"
+            font="/msdf-fonts/my-font-msdf.json"
+        ></a-text>
+
+        <!-- ... -->
+
+    </a-scene>
+</body>
+</html>
+```
+
+> [!TIP]
+> See [\<a-text\>](https://aframe.io/docs/master/primitives/a-text.html) for more information on usage.
+
+## 10. Frequently Asked Questions (FAQ)
+
+### 10.1. Where should I put my assets?
+
+To take full advantage of Vite's bundling and asset hashing capabilities, files should contained in the **src/assets/** directory – with the noted exception of MSDF fonts, which this template does not currently handle hashing.
+
+You may use the [**public/**](https://vite.dev/guide/assets.html#the-public-directory) folder for any other assets which aren't properly bundled or that you don't wish to have hashed in the production build.
+
+### 10.2. How do I add additional asset file types to the bundler?
+
+You can add additional file types to the **assetsInclude** parameter of the **vite.config.js** file:
+
+```javascript
+// ...
+export default defineConfig(
+    {
+        // ...
+        assetsInclude:
+        [
+            "**/*.gltf",
+            "**/*.glb",
+            // Your file type(s) here.
+        ],
+        // ...
+    }
+);
+```
+
+### 10.3. What if I want the minified version of A-Frame?
+
+Update the import statement in with the specific minified version in **index.html**:
+
+```html
+    <!-- ... -->
+
+<script type="module">
+    import "node_modules/aframe/dist/aframe-v1.6.0.min.js";
+    // ...
+</script>
+
+    <!-- ... -->
+```
+
+> [!IMPORTANT]
+> Ensure that you match the import statement version number with the corresponding installed version.
+
+## 11. References
 
 - [A-Frame](https://aframe.io)
 - [Vite](https://vite.dev)
 - [Rollup](https://rollupjs.org/)
+- [Khronos | glTF](https://www.khronos.org/gltf/)
