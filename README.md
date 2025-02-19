@@ -131,9 +131,12 @@ Though unlikely, if you wish to change either of these configurations for any re
 
 1. As before, open your web browser and navigate to the listed URI starting with `https://192.168`. Be certain to include the `:5173` port number as well.
 
+> [!NOTE]
+> Upon opening the link in your browser you may receive a variation of a "Your connection is not private..." message due to the generated certificate. This is expected. Follow your browser's buttons (e.g., Advanced), links, or prompts to enable you to proceed.
+
 ### 5.4. Rapid Development
 
-In most cases the Vite you may leave the Vite server running while you develop in your code editor.
+In most cases you may leave the Vite server running while you develop in your code editor.
 
 Code changes are generally detected when files are saved, and the Vite development server will force an update on your page.
 
@@ -237,6 +240,9 @@ The following section provides suggestions on how to import common asset types.
 
 These examples suggest using the [A-Frame Asset Management System](https://aframe.io/docs/master/core/asset-management-system.html).
 
+> [!NOTE]
+> Sample assets are not provided as part of this project.
+
 ### 9.1. Images
 
 Suggested asset location: **src/assets/images/**
@@ -250,7 +256,7 @@ Example: **index.html**
     <script type="module">
         import "aframe";
         // ...
-        import "./src/assets/models/my-image.png";
+        import "./src/assets/images/my-image.png";
         // ...
     </script>
 </head>
@@ -259,7 +265,7 @@ Example: **index.html**
         <a-assets>
             <!-- ... -->
 
-            <img id="my-image" src="./src/assets/audio/my-image.png" />
+            <img id="my-image" src="./src/assets/images/my-image.png" />
 
             <!-- ... -->
         </a-assets>
@@ -291,7 +297,7 @@ Example: **index.html**
     <script type="module">
         import "aframe";
         // ...
-        import "./src/assets/models/my-audio.mp3";
+        import "./src/assets/audio/my-audio.mp3";
         // ...
     </script>
 </head>
@@ -332,7 +338,7 @@ Example: **index.html**
     <script type="module">
         import "aframe";
         // ...
-        import "./src/assets/models/my-video.mp4";
+        import "./src/assets/videos/my-video.mp4";
         // ...
     </script>
 </head>
@@ -341,7 +347,7 @@ Example: **index.html**
         <a-assets>
             <!-- ... -->
 
-            <video id="my-video" src="./src/assets/audio/my-video.mp4"></video>
+            <video id="my-video" src="./src/assets/videos/my-video.mp4"></video>
 
             <!-- ... -->
         </a-assets>
@@ -461,7 +467,7 @@ Example: **index.html**
 
 ### 10.1. Where should I put my assets?
 
-To take full advantage of Vite's bundling and asset hashing capabilities, files should contained in the **src/assets/** directory – with the noted exception of MSDF fonts, which this template does not currently handle hashing.
+To take full advantage of Vite's bundling and asset hashing capabilities, files should be contained in the **src/assets/** directory – with the noted exception of MSDF fonts, which this template does not currently handle hashing.
 
 You may use the [**public/**](https://vite.dev/guide/assets.html#the-public-directory) folder for any other assets which aren't properly bundled or that you don't wish to have hashed in the production build.
 
