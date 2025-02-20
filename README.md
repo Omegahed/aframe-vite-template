@@ -493,21 +493,18 @@ export default defineConfig(
 
 ### 10.3. What if I want the minified version of A-Frame?
 
-Update the import statement in with the specific minified version in **index.html**:
+Update the import statement in with the minified version specified in **index.html**:
 
 ```html
     <!-- ... -->
 
 <script type="module">
-    import "node_modules/aframe/dist/aframe-v1.6.0.min.js";
+    import "/node_modules/aframe/dist/aframe-master.min.js";
     // ...
 </script>
 
     <!-- ... -->
 ```
-
-> [!IMPORTANT]
-> Ensure that you match the import statement version number with the corresponding installed version.
 
 ## 11. References
 
