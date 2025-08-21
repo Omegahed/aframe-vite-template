@@ -7,11 +7,11 @@ if ( typeof AFRAME === "undefined" )
     );
 }
 
-AFRAME.registerComponent("random-color", {
+AFRAME.registerComponent( "random-color", {
 
     schema:
     {
-        // Time in milliseconds (ms).
+        // NOTE: Time in milliseconds (ms).
         minimumInterval: { type: "number", default: 2000 }
     },
 
@@ -63,11 +63,12 @@ AFRAME.registerComponent("random-color", {
         const letters = "0123456789ABCDEF";
         let color = "#";
 
-        for ( let i = 0; i < 6; i++) {
+        for ( let i = 0; i < 6; i++)
+        {
             color += letters[ Math.floor( Math.random() * 16 ) ];
         }
 
         return color;
     }
 
-});
+} );
